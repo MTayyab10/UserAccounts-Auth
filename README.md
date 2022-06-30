@@ -1,15 +1,21 @@
-# UserAccounts-Auth
+## UserAccounts-Auth
+
+This project is about to the **UserAccounts Auth**
+
+### Prerequisites: 
+
+Must have installed Django and React and setup requirement.
+
+### Table of Content
+
+[Setup](#Backend Setup)
+
+[Settings.py Code]()
 
 
-### Accounts4 Apps
+### Backend Setup
 
-This is the third app of our backend.
-
-#### [accounts4 code]()
-
-### Setup
-
-For authentication, we need to have install the following pkg.
+For authentication, we need to install the following pkg.
 
     pip install djangorestframework-simplejwt
 
@@ -52,17 +58,18 @@ After this move the build folder in the backend folder.
 
 #### Build, file package.json
 
+By adding this line of code, We do not need
+to copy build from frontend and then
+past in the backend folder.
+
+_Note:_ This code is only works in window
+for mac you can search on Google/StackOverFlow.
+
     "build": "rm -rf ../backend/build && react-scripts ../backend/build && cp -r build ../backend/build",
 
-By default, it should like this
+By default, it should like this in `package.json` file
 
        "build": "react-scripts build",
-
-### ERRORS Handling
-
-[Error Handing with React & Redux](https://www.pluralsight.com/guides/centralized-error-handing-with-react-and-redux)
-
-[Error Handling](https://alexandrempsantos.com/sane-error-handling-react-redux/#before---the-default-way)
 
 ### Backend Django Settings.py
 
@@ -97,10 +104,12 @@ Build we will get from _React Frontend_
     EMAIL_USE_TLS = True
 
 In google gmail need to turn on two-step verification so able to send email to users.
+Need to get _EMAIL_HOST_PASSWORD_ from google account.
+
 
 [Google Account](https://myaccount.google.com/security)
 
-**DRF and Djoser settings**
+**DRF and Djoser Settings**
 
     REST_FRAMEWORK = {
         'DEFAULT_PERMISSION_CLASSES': [
@@ -110,6 +119,8 @@ In google gmail need to turn on two-step verification so able to send email to u
            'rest_framework_simplejwt.authentication.JWTAuthentication',
        ),
     }
+
+### JWT (Json Web Tokens)
 
 **[JWT Docs](https://django-rest-framework-simplejwt.readthedocs.io/en/latest/settings.html)**
 
@@ -125,6 +136,8 @@ In google gmail need to turn on two-step verification so able to send email to u
         'ROTATE_REFRESH_TOKENS': False,
         'BLACKLIST_AFTER_ROTATION':  False
     }
+
+### Djoser
 
 **[Djoser Docs](https://djoser.readthedocs.io/en/latest/settings.html)**
 
@@ -154,9 +167,13 @@ In google gmail need to turn on two-step verification so able to send email to u
         }
     }
 
-Custom User Model
+#### Custom User Model
 
     AUTH_USER_MODEL = "accounts.UserAccount"
+
+In `models.py` created a custom model for
+user and then need to let the django to know 
+the model s
 
 ### Backend Django Urls.py
 
@@ -175,9 +192,19 @@ Need to include the following code in the **`backend/urls.py`**.
     ]
     urlpatterns += [re_path(r'.*', TemplateView.as_view(template_name='index.html'))]
 
-As we know that React frontend have root `index.html` file. So, we need to add template_name index.html.
+As we know that React frontend have root `index.html` file.
+So, we need to add template_name index.html.
+
+
 
 #### YT Tutorial
 
 Following this tutorial
 series [Django & React JWT auth](https://youtube.com/playlist?list=PLJRGQoqpRwdfoa9591BcUS6NmMpZcvFsM)
+
+
+### Errors Handling
+
+[Error Handing with React & Redux](https://www.pluralsight.com/guides/centralized-error-handing-with-react-and-redux)
+
+[Error Handling](https://alexandrempsantos.com/sane-error-handling-react-redux/#before---the-default-way)
