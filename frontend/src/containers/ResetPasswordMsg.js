@@ -10,14 +10,14 @@ export default function ResetPasswordMsg() {
 
             <div className={"offset-md-2 col-md-8"}>
 
-                <div className="alert alert-info alert-dismissible
-                fade show p-2 text-center" role="alert">
+                {/*<div className="alert alert-info alert-dismissible*/}
+                {/*fade show p-2 text-center" role="alert">*/}
 
-                    Email Sent Successfully
+                {/*    Email Sent Successfully*/}
 
-                    <button type="button" className="btn-close small pt-4 pb-2" data-bs-dismiss="alert"
-                            aria-label="Close"/>
-                </div>
+                {/*    <button type="button" className="btn-close small pt-4 pb-2" data-bs-dismiss="alert"*/}
+                {/*            aria-label="Close"/>*/}
+                {/*</div>*/}
 
                 <div className={"container text-center"}>
 

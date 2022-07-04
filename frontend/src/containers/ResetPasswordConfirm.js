@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import {Navigate, useMatch} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {reset_password_confirm} from '../actions/auth';
+import {setAlert} from "../actions/alert";
+import {toast, ToastContainer} from "react-toastify";
 
 
 const ResetPasswordConfirm = ({ reset_password_confirm}) => {
@@ -22,8 +24,6 @@ const ResetPasswordConfirm = ({ reset_password_confirm}) => {
 
     let match = useMatch('/password/reset/confirm/:uid/:token');
 
-    let errorMsg;
-
     const onSubmit = e => {
         e.preventDefault();
 
@@ -32,12 +32,12 @@ const ResetPasswordConfirm = ({ reset_password_confirm}) => {
         const token = match.params.token;
 
         if (new_password !== re_new_password) {
-            errorMsg = "Password didn't matched."
-            alert("Password didn't matched.");
-            console.log(errorMsg)
+            toast.error("Passwords didn't matched, Try again.",
+                {position: "top-center"})
 
         } else {
-            alert("Successfully, your password has been reset.")
+            setAlert("Successfully, your password has been reset.",
+                "success")
             reset_password_confirm(uid, token, new_password, re_new_password);
             setRequestSent(true);
         }
@@ -48,42 +48,68 @@ const ResetPasswordConfirm = ({ reset_password_confirm}) => {
         console.log("Password changed successfully")
         return <Navigate to='/login'/>
     }
-    //  else {
-    //     return <Navigate to='/password/reset/confirm/:uid/:token' />
-    // };
+
 
     return (
-        <div className='container mt-5'>
+        <div className='container mt-3'>
+
+            <ToastContainer />
+
+            <h3 className={"text-center p-1"}>
+                Set New Password
+            </h3>
+
             <form onSubmit={e => onSubmit(e)}>
-                <div className='form-group'>
-                    <input
-                        className='form-control'
-                        type='password'
-                        placeholder='New Password'
-                        name='new_password'
-                        value={new_password}
-                        onChange={e => onChange(e)}
-                        minLength='6'
-                        required
-                    />
-                </div>
-                <br/>
-                <div className='form-group'>
-                    <input
-                        className='form-control'
-                        type='password'
-                        placeholder='Confirm New Password'
-                        name='re_new_password'
-                        value={re_new_password}
-                        onChange={e => onChange(e)}
-                        minLength='6'
-                        required
-                    />
+
+                <div className="col-md-4 offset-1 col-10">
+
+                    <label htmlFor="validatePassword" className="form-label">
+                        Password
+                    </label>
+
+                    <input type="password"
+                           className="form-control"
+                           id="validatePassword"
+                           name='new_password'
+                           value={new_password}
+                           onChange={e => onChange(e)}
+                           required
+                           minLength='6'
+                           autoComplete={"true"} />
+                    {/*<div className="valid-feedback">*/}
+                    {/*    Looks good!*/}
+                    {/*</div>*/}
+                    <div className="invalid-feedback">
+                        Please provide a password.
+                    </div>
                 </div>
 
-                <h3>This is some {errorMsg}</h3>
+                <br />
 
-                <button className='btn btn-primary p-2' type='submit'>
+                <div className="col-md-4 offset-1 col-10">
+
+                    <label htmlFor="validateConfirmPassword" className="form-label">
+                        Confirm Password
+                    </label>
+
+                    <input type="password"
+                           className="form-control"
+                           id="validateConfirmPassword"
+                           name="re_new_password"
+                           value={re_new_password}
+                           onChange={e => onChange(e)}
+                           required
+                           minLength='6'
+                           autoComplete={"true"}/>
+                    {/*<div className="valid-feedback">*/}
+                    {/*    Looks good!*/}
+                    {/*</div>*/}
+                    <div className="invalid-feedback">
+                        Please provide a password.
+                    </div>
+                </div>
+
+                <button className='offset-1 btn btn-primary mt-3' type='submit'>
                     Reset Password
                 </button>
             </form>

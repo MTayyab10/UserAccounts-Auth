@@ -21,18 +21,12 @@ const ResetPassword = ({reset_password}) => {
     const onSubmit = e => {
         e.preventDefault();
         reset_password(email);
-         setRequestSent(true);
+        setRequestSent(true);
     };
-
-    let msg;
 
     if (requestSent) {
         return <Navigate to='/reset-password/sent'/>
-    } else
-        msg = "There is some error."
-    // else {
-    //     return <Navigate to={'/reset-password'} />
-    // };
+    }
 
     return (
         <div className="container">
@@ -63,8 +57,6 @@ const ResetPassword = ({reset_password}) => {
                                 required
                             />
                         </div>
-
-                        <h3>{msg && msg}</h3>
 
                         <input type="submit" value="Rest Password"
                                className="btn btn-pill text-white btn-primary mt-3" />
