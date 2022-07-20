@@ -21,8 +21,8 @@ const Alert = ({ alerts }) => alerts !== null &&
         {alert.alertType === 'error' ? errorIcon : successIcon}
         {alert.msg}
 
-         <button type="button" className="btn-close small pt-4 pb-1" data-bs-dismiss="alert"
-                            aria-label="Close"/>
+         <button type="button" className="btn-close small pt-4 pb-1"
+                 data-bs-dismiss="alert" aria-label="Close"/>
 
     </div>
 ));

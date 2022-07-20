@@ -89,8 +89,8 @@ export const signup = (name, email, password, re_password) => async dispatch => 
             type: SIGNUP_FAIL,
         })
 
-        dispatch(setAlert("Username/Password is already taken. " +
-            "Try another.", 'error'))
+        dispatch(setAlert("Username/Email is already taken." +
+            " Try another.", 'error'))
 
     }
 

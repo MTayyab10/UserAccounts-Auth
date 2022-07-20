@@ -68,9 +68,9 @@ const Signup = ({ signup, isAuthenticated }) => {
         return <Navigate to='/' />
     }
 
-    // if (accountCreated) {
-    //     return <Navigate to='/activate/sent' />
-    // }
+    if (accountCreated) {
+        return <Navigate to='/activate/sent' />
+    }
 
     // Bootstrap To handle the Form Validation
 
