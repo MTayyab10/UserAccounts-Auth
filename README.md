@@ -203,6 +203,10 @@ Following this tutorial
 series [Django & React JWT auth](https://youtube.com/playlist?list=PLJRGQoqpRwdfoa9591BcUS6NmMpZcvFsM)
 
 
+### Errors in Axios
+
+[Errors with Axios](https://stackabuse.com/handling-errors-with-axios/)
+
 ### Errors Handling
 
 [Error Handing with React & Redux](https://www.pluralsight.com/guides/centralized-error-handing-with-react-and-redux)

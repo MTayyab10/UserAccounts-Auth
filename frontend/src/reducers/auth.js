@@ -17,7 +17,10 @@ import {
     GOOGLE_AUTH_FAIL,
     FACEBOOK_AUTH_SUCCESS,
     FACEBOOK_AUTH_FAIL,
-    LOGOUT, RESEND_ACTIVATION_SUCCESS, RESEND_ACTIVATION_FAIL
+    LOGOUT,
+    RESEND_ACTIVATION_SUCCESS,
+    RESEND_ACTIVATION_FAIL,
+
 } from '../actions/types';
 
 const initialState = {
@@ -25,10 +28,11 @@ const initialState = {
     refresh: localStorage.getItem('refresh'),
     isAuthenticated: null,
     user: null,
+    errors: {}
 };
 
 export default function(state = initialState, action) {
-    const { type, payload } = action;
+    const { type, payload, errors } = action;
 
     switch(type) {
         case AUTHENTICATED_SUCCESS:
@@ -79,7 +83,6 @@ export default function(state = initialState, action) {
 
             return {
                 ...state,
-                error: "This is some error"
             }
 
         case SIGNUP_FAIL:
@@ -106,6 +109,7 @@ export default function(state = initialState, action) {
             return {
                 ...state
             }
+
         default:
             return state
     }

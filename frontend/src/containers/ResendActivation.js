@@ -24,15 +24,9 @@ const ResendActivation = ({resend_verify}) => {
         setRequestSent(true);
     };
 
-    let msg;
-
     if (requestSent) {
         return <Navigate to='/activate/sent'/>
-    } else
-        msg = "There is some error."
-    // else {
-    //     return <Navigate to={'/reset-password'} />
-    // };
+    }
 
     return (
         <div className="container">
@@ -63,8 +57,6 @@ const ResendActivation = ({resend_verify}) => {
                                 required
                             />
                         </div>
-
-                        <h3>{msg && msg}</h3>
 
                         <input type="submit" value="Resend Link"
                                className="btn btn-pill text-white btn-primary mt-3" />

@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
 import {Link, Navigate} from 'react-router-dom';
-import {connect} from 'react-redux';
-import {login} from '../actions/auth';
+import {connect, useSelector} from 'react-redux';
+import {login, setAlert} from '../actions/auth';
 import axios from 'axios';
+import {toast, ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 
 const Login = ({login, isAuthenticated}) => {
 
@@ -13,6 +15,10 @@ const Login = ({login, isAuthenticated}) => {
 
     const {email, password} = formData;
 
+    // errors from redux state
+    // const {errors} = this.props
+    // const {errors} = useSelector(state => state.errors)
+
     const onChange = e => setFormData({
         ...formData,
         [e.target.name]: e.target.value
@@ -20,6 +26,7 @@ const Login = ({login, isAuthenticated}) => {
 
     const onSubmit = e => {
         e.preventDefault();
+        // toast.success("You are login, Successfully.")
         login(email, password);
     };
 
@@ -46,15 +53,14 @@ const Login = ({login, isAuthenticated}) => {
     // If user is authenticated
     // redirect to home page
 
-    let msg;
     if (isAuthenticated) {
-        // alert("You are login")
-        return <Navigate to='/'/>
+        return <Navigate to={'/'} />
     }
 
     // Bootstrap To handle the Form Validation
 
-    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    // Example starter JavaScript for disabling form submissions
+    // if there are invalid fields
     (function () {
         'use strict'
 
@@ -77,9 +83,16 @@ const Login = ({login, isAuthenticated}) => {
 
 
     return (
+
         <div className='container mt-2'>
 
+            {/*Display error and success alerts*/}
+
+            {/*<ToastContainer />*/}
+
             <h2 className={"text-center p-2"}>Sign In</h2>
+
+            {/*<h4>{alert}</h4>*/}
 
             <form onSubmit={e => onSubmit(e)}
                   className="row g-3 needs-validation" noValidate>
@@ -186,7 +199,7 @@ const Login = ({login, isAuthenticated}) => {
 
 const mapStateToProps = state => (
     {
-        isAuthenticated: state.auth.isAuthenticated
+        isAuthenticated: state.auth.isAuthenticated,
     }
 );
 

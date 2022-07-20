@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { signup } from '../actions/auth';
+import {connect, useDispatch, useSelector} from 'react-redux';
+import {signup} from '../actions/auth';
 import axios from 'axios';
+import {toast, ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css'
+import {setAlert} from "../actions/alert";
+
 
 const Signup = ({ signup, isAuthenticated }) => {
 
@@ -14,9 +18,8 @@ const Signup = ({ signup, isAuthenticated }) => {
         name: '',
         email: '',
         password: '',
-        re_password: ''
+        re_password: '',
     });
-
 
     const { name,
         // first_name, last_name,
@@ -31,15 +34,13 @@ const Signup = ({ signup, isAuthenticated }) => {
 
         e.preventDefault();
 
-        if (password === re_password) {
-            signup( name,
-                // first_name, last_name,
-                email, password, re_password);
-            setAccountCreated(true);
+        if (password !== re_password) {
+            toast.error("Passwords didn't matched, Try again.",
+                {position: "top-center"})
 
-        } else  {
-            alert("Passwords didn't matched.")
-            setAccountCreated(false)
+        } else {
+            signup(name, email, password, re_password);
+            setAccountCreated(true)
         }
     };
 
@@ -88,7 +89,6 @@ const Signup = ({ signup, isAuthenticated }) => {
                         event.preventDefault()
                         event.stopPropagation()
                     }
-
                     form.classList.add('was-validated')
                 }, false)
             })
@@ -100,6 +100,12 @@ const Signup = ({ signup, isAuthenticated }) => {
 
             <h2 className={"text-center p-2"}>Register</h2>
 
+            {/*Official Docs https://fkhadra.github.io/react-toastify/introduction*/}
+
+            {/*This is just to display password didn't match error.*/}
+
+            <ToastContainer />
+
             <form onSubmit={e => onSubmit(e)}
                   className="row g-3 needs-validation" noValidate>
 
@@ -107,7 +113,7 @@ const Signup = ({ signup, isAuthenticated }) => {
 
                     <label htmlFor="validateFirstName"
                            className="form-label">
-                        Name
+                        Username
                     </label>
 
                     <input type="text"
@@ -238,6 +244,7 @@ const Signup = ({ signup, isAuthenticated }) => {
 
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
+    errors: state.auth.errors,
 });
 
 
