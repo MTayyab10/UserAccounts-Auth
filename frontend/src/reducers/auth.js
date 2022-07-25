@@ -1,3 +1,5 @@
+// first import types which created in actions dir
+
 import {
     LOGIN_SUCCESS,
     LOGIN_FAIL,
@@ -24,15 +26,14 @@ import {
 } from '../actions/types';
 
 const initialState = {
-    access: localStorage.getItem('access'),
-    refresh: localStorage.getItem('refresh'),
+    access: localStorage.getItem("access"),
+    refresh: localStorage.getItem("refresh"),
     isAuthenticated: null,
     user: null,
-    errors: {}
 };
 
 export default function(state = initialState, action) {
-    const { type, payload, errors } = action;
+    const { type, payload } = action;
 
     switch(type) {
         case AUTHENTICATED_SUCCESS:

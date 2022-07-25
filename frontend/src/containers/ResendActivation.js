@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Navigate} from 'react-router-dom';
+import {Navigate, useNavigate} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {resend_verify} from '../actions/auth';
 
@@ -18,15 +18,17 @@ const ResendActivation = ({resend_verify}) => {
         [e.target.name]: e.target.value
     });
 
+    const navigate = useNavigate();
+
     const onSubmit = e => {
         e.preventDefault();
-        resend_verify(email);
+        resend_verify(email, navigate);
         setRequestSent(true);
     };
 
-    if (requestSent) {
-        return <Navigate to='/activate/sent'/>
-    }
+    // if (requestSent) {
+    //     return <Navigate to='/activate/sent'/>
+    // }
 
     return (
         <div className="container">

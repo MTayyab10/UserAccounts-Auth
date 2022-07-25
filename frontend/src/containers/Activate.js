@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {Navigate, useMatch} from 'react-router-dom';
+import {Navigate, useMatch, useNavigate} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { verify } from '../actions/auth';
 
@@ -9,18 +9,20 @@ const Activate = ({ verify }) => {
 
     let match = useMatch('/activate/:uid/:token');
 
+    let navigate = useNavigate()
+
     const verify_account = e => {
         const uid = match.params.uid;
         const token = match.params.token;
 
-        verify(uid, token);
+        verify(uid, token, navigate);
         setVerified(true);
     };
 
-    if (verified) {
-        alert("Your account has been activated.")
-        return <Navigate to='/login' />
-    }
+    // if (verified) {
+    //     // alert("Your account has been activated.")
+    //     return <Navigate to='/login' />
+    // }
 
     return (
         <div className='container'>

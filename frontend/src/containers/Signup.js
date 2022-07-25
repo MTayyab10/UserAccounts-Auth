@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {connect, useDispatch, useSelector} from 'react-redux';
 import {signup} from '../actions/auth';
 import axios from 'axios';
@@ -30,6 +31,8 @@ const Signup = ({ signup, isAuthenticated }) => {
         [e.target.name]: e.target.value
     });
 
+    const navigate = useNavigate();
+
     const onSubmit = e => {
 
         e.preventDefault();
@@ -39,8 +42,10 @@ const Signup = ({ signup, isAuthenticated }) => {
                 {position: "top-center"})
 
         } else {
-            signup(name, email, password, re_password);
+            signup(name, email, password, re_password, navigate);
             setAccountCreated(true)
+            // return <Navigate to='/activate/sent'/>
+
         }
     };
 
@@ -68,13 +73,14 @@ const Signup = ({ signup, isAuthenticated }) => {
         return <Navigate to='/' />
     }
 
-    if (accountCreated) {
-        return <Navigate to='/activate/sent' />
-    }
+    // if (accountCreated) {
+    //     return <Navigate to='/activate/sent' />
+    // }
 
     // Bootstrap To handle the Form Validation
 
-    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    // Example starter JavaScript for disabling form submissions
+    // if there are invalid fields
     (function () {
         'use strict'
 

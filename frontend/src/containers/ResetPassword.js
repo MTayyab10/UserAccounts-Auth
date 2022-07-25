@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Navigate} from 'react-router-dom';
+import {Navigate, useNavigate} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {reset_password} from '../actions/auth';
 
@@ -18,15 +18,19 @@ const ResetPassword = ({reset_password}) => {
         [e.target.name]: e.target.value
     });
 
+    const navigate = useNavigate()
+
     const onSubmit = e => {
         e.preventDefault();
-        reset_password(email);
+        reset_password(email, navigate);
         setRequestSent(true);
     };
 
-    if (requestSent) {
-        return <Navigate to='/reset-password/sent'/>
-    }
+    // if (requestSent) {
+    //     return <Navigate to='/reset-password/sent'/>
+    // }
+
+    const animation = () =>  "This is some animation";
 
     return (
         <div className="container">
@@ -58,7 +62,7 @@ const ResetPassword = ({reset_password}) => {
                             />
                         </div>
 
-                        <input type="submit" value="Rest Password"
+                        <input type="submit" value="Rest Password" onClick={animation}
                                className="btn btn-pill text-white btn-primary mt-3" />
                         {/*<button className='btn btn-primary' type='submit'>Reset Password</button>*/}
                     </form>

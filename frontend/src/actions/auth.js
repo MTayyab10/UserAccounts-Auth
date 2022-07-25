@@ -1,7 +1,6 @@
 import axios from 'axios';
-// import process from "process";
-import { setAlert } from './alert';
-import { toast } from 'react-toastify';
+import {setAlert} from './alert';
+import {toast} from 'react-toastify';
 
 import {
     LOGIN_SUCCESS,
@@ -26,7 +25,11 @@ import {
     FACEBOOK_AUTH_FAIL,
     LOGOUT,
 } from './types';
+import React from "react";
 
+// Note: Add Redux DevTool to check the data
+
+// function for getting user data
 
 export const load_user = () => async dispatch => {
     if (localStorage.getItem('access')) {
@@ -59,7 +62,8 @@ export const load_user = () => async dispatch => {
     }
 };
 
-export const signup = (name, email, password, re_password) => async dispatch => {
+export const signup = (name, email, password, re_password, navigate) => async dispatch => {
+
     const config = {
         headers: {
             'Content-Type': 'application/json'
@@ -79,7 +83,13 @@ export const signup = (name, email, password, re_password) => async dispatch => 
             payload: res.data
         });
         dispatch(setAlert("Your account has been created.",
-            'success'))
+            "success"))
+
+        if (res.status === 201) {
+            // return <Navigate to='/activate/sent'/>;
+            return navigate('/activate/sent', {replace: true})
+        }
+
         // toast.success("User Signup Success");
         console.log("Signup Success ", res.data)
 
@@ -90,13 +100,13 @@ export const signup = (name, email, password, re_password) => async dispatch => 
         })
 
         dispatch(setAlert("Username/Email is already taken." +
-            " Try another.", 'error'))
-
+            " Try another.", "error"))
     }
 
 };
 
-export const verify = (uid, token) => async dispatch => {
+export const verify = (uid, token, navigate) => async dispatch => {
+
     const config = {
         headers: {
             'Content-Type': 'application/json'
@@ -106,13 +116,18 @@ export const verify = (uid, token) => async dispatch => {
     const body = JSON.stringify({uid, token});
 
     try {
-        await axios.post(`${process.env.REACT_APP_API_URL}/auth/users/activation/`, body, config);
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/users/activation/`, body, config);
 
         dispatch({
             type: ACTIVATION_SUCCESS,
         });
-        dispatch(setAlert("Your account is activated.",
-            'success'))
+        dispatch(setAlert("Your account is activated, Please login.",
+            "info"))
+
+        if (res.status === 204) {
+            // return <Navigate to='/activate/sent'/>;
+            return navigate("/login", {replace: true})
+        }
 
         console.log("User is activated",)
 
@@ -121,13 +136,13 @@ export const verify = (uid, token) => async dispatch => {
         dispatch({
             type: ACTIVATION_FAIL
         })
-        dispatch(setAlert("Activation fails.", 'error'))
+        dispatch(setAlert("Activation fails, Try again.", "error"))
         console.log(err.response.data)
         console.log("Activation fail error", err)
     }
 };
 
-export const resend_verify = (email) => async dispatch => {
+export const resend_verify = (email, navigate) => async dispatch => {
 
     const config = {
         headers: {
@@ -138,28 +153,33 @@ export const resend_verify = (email) => async dispatch => {
     const body = JSON.stringify({email})
 
     try {
-        await axios.post(`${process.env.REACT_APP_API_URL}/auth/users/resend_activation/`, body, config)
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/users/resend_activation/`, body, config)
 
         dispatch({
             type: RESEND_ACTIVATION_SUCCESS
         })
-        dispatch(setAlert("Resend Activation Success", 'success'))
+        dispatch(setAlert("Resend Activation Success", "success"))
 
-        console.log("Resend Activation Success");
+         if (res.status === 204) {
+            // return <Navigate to='/activate/sent'/>;
+            return navigate('/activate/sent', {replace: true})
+        }
+
+        console.log("Resend Activation Success", res.status);
 
     } catch (err) {
 
         dispatch({
             type: RESEND_ACTIVATION_FAIL,
         })
-        dispatch(setAlert("Resent Activation Fail", 'error'))
+        dispatch(setAlert("Resent activation fail, Try again.", "error"))
 
         console.log(err.response.data)
         console.log("Error for Resend Activation", err)
     }
 }
 
-export const reset_password = (email) => async dispatch => {
+export const reset_password = (email, navigate) => async dispatch => {
     const config = {
         headers: {
             'Content-Type': 'application/json'
@@ -169,13 +189,20 @@ export const reset_password = (email) => async dispatch => {
     const body = JSON.stringify({email});
 
     try {
-        await axios.post(`${process.env.REACT_APP_API_URL}/auth/users/reset_password/`, body, config);
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/users/reset_password/`, body, config);
 
         dispatch({
             type: PASSWORD_RESET_SUCCESS
         });
-        dispatch(setAlert("Reset Password Email Sent", 'info'))
-        console.log("Reset Password Success");
+
+        dispatch(setAlert("Reset Password Email Sent", "info"))
+
+         if (res.status === 204) {
+            // return <Navigate to='/activate/sent'/>;
+            return navigate("/reset-password/sent", {replace: true})
+        }
+
+         console.log("Reset Password Success");
 
     } catch (err) {
         dispatch({
@@ -188,7 +215,9 @@ export const reset_password = (email) => async dispatch => {
     }
 };
 
-export const reset_password_confirm = (uid, token, new_password, re_new_password) => async dispatch => {
+export const reset_password_confirm = (uid, token,
+                                       new_password,
+                                       re_new_password) => async dispatch => {
     const config = {
         headers: {
             'Content-Type': 'application/json'
