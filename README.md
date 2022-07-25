@@ -1,46 +1,70 @@
 ## UserAccounts-Auth
 
-This project is about to the **UserAccounts Auth**
-
-### Prerequisites: 
-
-Must have installed Django and React and setup requirement.
+This project is about to the **UserAccounts Auth** for
+production level.
 
 ### Table of Content
 
-[Setup](#Backend Setup)
+* [Frontend](#Frontend)
+  * [Setup]()
+  * [Structure]()
+  
+* [Backend](#Backend)
+  * [Setup]()
+  * [Structure]()
+  
 
-[Settings.py Code]()
+## Frontend
+
+    Build with React JS. 
+
+**src** folder contain following
+dirs:
+
+* [actions](#actions)
+* [components](#components)
+* [containers](#containers)
+* [hocs](#hocs)
+* [reducers](#reducers)
+
+And Files: 
+
+* [App.js](#App.js)
+* [index.js](#index.js)
+* [store.js](#store.js)
+
+### actions
+
+Actions are plain JS objects that must have a type attribute to indicate the 
+type of action performed.
+
+This folder contains the following
+3 files.
+
+### [types.js](types.js)
+
+In this file have different kind of
+action types which we need to do for `auths` & `alerts` msgs.
+For example:
+
+    export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+    export const LOGIN_FAIL = 'LOGIN_FAIL';
+    export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
+Have types for both `auth.js` and `alert.js`.
+
+### [auth.js](auth.js)
+
+All about authentication of users. Have different kind of functions.
+
+[YT video link](https://youtu.be/5gnixz0Q3co?t=794)
+
+### [alert.js](alert.js)
+
+For showing `succces`, `error` & `info` msgs to 
+the users use alerts.
 
 
-### Backend Setup
-
-For authentication, we need to install the following pkg.
-
-    pip install djangorestframework-simplejwt
-
-Also need to install *djoser* pkg
-
-    pip install djoser
-
-### Include
-
-After this need to add in the project
-**`settings.py`** at *INSTALLED_APPS* include the below lines of code.
-
-    'djoser',
-
-[official djoser docs](https://djoser.readthedocs.io/en/latest/getting_started.html)
-
-#### Models.py
-
-In the models of this app have custom user model.
-
-In the `settings.py` also need to add this:
-
-    AUTH_USER_MODEL = "accounts4.UserAccount"
-
-### Frontend
+### Frontend Setup
 
     npm install --save axios react-router-dom redux redux-devtools-extension react-redux redux-thunk 
 
@@ -71,7 +95,36 @@ By default, it should like this in `package.json` file
 
        "build": "react-scripts build",
 
-### Backend Django Settings.py
+## Backend 
+
+### Backend Setup
+
+For authentication, we need to install the following pkg.
+
+    pip install djangorestframework-simplejwt
+
+Also need to install *djoser* pkg
+
+    pip install djoser
+
+#### Include
+
+After this need to add in the project
+**`settings.py`** at *INSTALLED_APPS* include the below lines of code.
+
+    'djoser',
+
+[official djoser docs](https://djoser.readthedocs.io/en/latest/getting_started.html)
+
+#### models.py
+
+In the models of this app have custom user model.
+
+In the `settings.py` also need to add this:
+
+    AUTH_USER_MODEL = "accounts4.UserAccount"
+
+#### settings.py
 
 Need to include these following code in the **`settings.py`**.
 
@@ -120,7 +173,7 @@ Need to get _EMAIL_HOST_PASSWORD_ from google account.
        ),
     }
 
-### JWT (Json Web Tokens)
+#### JWT (Json Web Tokens)
 
 **[JWT Docs](https://django-rest-framework-simplejwt.readthedocs.io/en/latest/settings.html)**
 
@@ -137,7 +190,7 @@ Need to get _EMAIL_HOST_PASSWORD_ from google account.
         'BLACKLIST_AFTER_ROTATION':  False
     }
 
-### Djoser
+#### Djoser
 
 **[Djoser Docs](https://djoser.readthedocs.io/en/latest/settings.html)**
 
@@ -175,13 +228,13 @@ In `models.py` created a custom model for
 user and then need to let the django to know 
 the model s
 
-### Backend Django Urls.py
+#### urls.py
 
 Need to include the following code in the **`backend/urls.py`**.
 
     from django.urls import path, include, re_path
 
-    # need for frontend react
+    # Need for frontend react
     from django.views.generic import TemplateView
 
     urlpatterns = [
@@ -196,8 +249,7 @@ As we know that React frontend have root `index.html` file.
 So, we need to add template_name index.html.
 
 
-
-#### YT Tutorial
+#### YouTube Tutorial
 
 Following this tutorial
 series [Django & React JWT auth](https://youtube.com/playlist?list=PLJRGQoqpRwdfoa9591BcUS6NmMpZcvFsM)
