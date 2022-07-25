@@ -33,7 +33,7 @@ And Files:
 * [index.js](#index.js)
 * [store.js](#store.js)
 
-### Actions
+## Actions
 
 Actions are plain JS objects that must have a type attribute to indicate the 
 type of action performed.
@@ -41,11 +41,11 @@ type of action performed.
 This folder contains the following
 3 files.
 
-* [types.js](#types.js)
-* [auth.js](#auth.js)
-* [alert.js](#alert.js)
+* [types.js](#Types)
+* [auth.js](#Auth)
+* [alert.js](#Alert)
 
-### types.js
+### Types
 
 In this file have different kind of
 action types which we need to do for `auths` & `alerts` msgs.
@@ -56,14 +56,14 @@ For example:
     export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
 Have types for both `auth.js` and `alert.js`.
 
-### auth.js
+### Auth
 
 All about authentication of users. Have different kind of functions like
 `signin`, `signup` or`reset_password` etc.
 
 [YT video link](https://youtu.be/5gnixz0Q3co?t=794)
 
-### alert.js
+### Alert
 
 For showing `succces`, `error` & `info` msgs to 
 the users according the situation
