@@ -69,8 +69,56 @@ For showing `succces`, `error` & `info` msgs to
 the users according the situation
 using ***alerts***.
 
+## Components
 
-### Frontend Setup
+A Component is a class or function
+that describes part of a React UI.
+
+We have only `Navbar.js` file.
+
+#### Navbar.js
+
+If user is `authenticated/login` show
+different NavLinks. Render according to
+the conditions.
+
+Also have `Alert.js` msg at 
+the end of Navbar.
+
+## Containers
+Container is an informal term for
+a React component that is 
+connected to a redux store.
+
+## Hocs
+
+A higher-order component (hoc)
+is an advanced technique in
+React for reusing component
+logic.
+
+HOCs are not part of the React API, per se.
+They are a pattern that emerges from React's compositional nature. Concretely, a higher-order component is a function that takes a component and returns a new component.
+
+## Reducers 
+
+The reducer is a pure function
+that accepts 2 parameters: 
+the current state 
+and an action object. 
+Depending on the action object,
+the reducer function must 
+update the state in an 
+immutable manner, and return 
+the new state.
+
+## .ENV File
+In the .env file we have
+API url, which is used in **Actions**.
+
+    REACT_APP_API_URL = http://localhost:8000
+
+## Frontend Setup
 
     npm install --save axios react-router-dom redux redux-devtools-extension react-redux redux-thunk 
 
