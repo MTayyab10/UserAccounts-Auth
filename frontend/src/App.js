@@ -19,6 +19,7 @@ import ActivateMsg from "./containers/ActivateMsg";
 import ResendActivation from "./containers/ResendActivation";
 
 const App = () => (
+
     <Provider store={store}>
         {/*<Router>*/}
             <Layout>

@@ -18,20 +18,4 @@ const Layout = ({ checkAuthenticated, load_user, children }) => {
     );
 };
 
-// const Layout = (props) => {
-//
-//      useEffect(() => {
-//         checkAuthenticated();
-//         load_user();
-//     }, []);
-//
-//      return (
-//         <div>
-//             <Navbar />
-//             {props.children}
-//         </div>
-//     );
-//
-// }
-
 export default connect(null, { checkAuthenticated, load_user })(Layout);

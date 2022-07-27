@@ -1,7 +1,7 @@
-import React, {Fragment, useState} from 'react';
-import {Link, Navigate} from 'react-router-dom';
-import {connect} from 'react-redux';
-import {logout} from '../actions/auth';
+import React, {Fragment, useState} from "react";
+import {Link} from "react-router-dom";
+import {connect, useSelector} from "react-redux";
+import {logout} from "../actions/auth";
 import {NavLink} from "react-router-dom";
 import Alert from "../containers/Alert";
 import {ToastContainer} from "react-toastify";
@@ -11,10 +11,13 @@ const Navbar = ({logout, isAuthenticated}) => {
 
     const [redirect, setRedirect] = useState(false);
 
+    // User Name
+
     const logout_user = () => {
         logout();
         setRedirect(true);
     };
+
 
     // If user is not login/authenticated
 
@@ -35,7 +38,7 @@ const Navbar = ({logout, isAuthenticated}) => {
         </Fragment>
     );
 
-    // if user is login/authenticated
+    // If user is login/authenticated
 
     const authLinks = () => (
         <>
@@ -55,7 +58,6 @@ const Navbar = ({logout, isAuthenticated}) => {
                    onClick={logout_user}>Logout</a>
             </li>
         </>
-
     );
 
     return (
@@ -64,7 +66,9 @@ const Navbar = ({logout, isAuthenticated}) => {
             <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
                 <div className="container-fluid">
 
-                    <Link className='navbar-brand' to='/'>Auth System</Link>
+                    <Link className='navbar-brand' to='/'>
+                        Auth System
+                    </Link>
 
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -72,7 +76,8 @@ const Navbar = ({logout, isAuthenticated}) => {
                         <span className="navbar-toggler-icon"/>
                     </button>
 
-                    <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                    <div className="collapse navbar-collapse"
+                         id="navbarSupportedContent">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             <li className="nav-item">
 
@@ -82,7 +87,6 @@ const Navbar = ({logout, isAuthenticated}) => {
                                 <NavLink to={"/"} className="nav-link">
                                     Home
                                 </NavLink>
-
                             </li>
 
                              {isAuthenticated ? authLinks() : guestLinks()}
@@ -96,7 +100,7 @@ const Navbar = ({logout, isAuthenticated}) => {
             <Alert />
             {/*<nav className='navbar navbar-light bg-light'>*/}
 
-            {/*    <Link className='navbar-brand' to='/'>Auth System</Link>*/}
+            {/* <Link className='navbar-brand' to='/'>Auth System</Link>*/}
 
         </Fragment>
     );

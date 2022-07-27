@@ -12,13 +12,13 @@ const Alert = ({ alerts }) => alerts !== null &&
 
     <div key={alert.id}
          className={`alert p-2 m-0 text-center alert-dismissible
-          fade show ${alert.alertType === 'error' ? 'alert-danger' :
-             alert.alertType === 'success' ? 'alert-success' :
-                 'alert-info'
+          fade show ${alert.alertType === "error" ? "alert-danger" :
+             alert.alertType === "success" ? "alert-success" :
+                 "alert-info"
          }`}
          // className="alert p-2 m-0" {alert.alertType === "error" ? "alert-danger" : "alert p-2 m-0"}>
         >
-        {alert.alertType === 'error' ? errorIcon : successIcon}
+        {alert.alertType === "error" ? errorIcon : successIcon}
         {alert.msg}
 
          <button type="button" className="btn-close small pt-4 pb-1"
