@@ -6,7 +6,7 @@ import axios from 'axios';
 import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 
-const Login = ({login, isAuthenticated}) => {
+const Login = ({login, isAuthenticated, loading}) => {
 
     const [formData, setFormData] = useState({
         email: '',
@@ -14,10 +14,6 @@ const Login = ({login, isAuthenticated}) => {
     });
 
     const {email, password} = formData;
-
-    // errors from redux state
-    // const {errors} = this.props
-    // const {errors} = useSelector(state => state.errors)
 
     const onChange = e => setFormData({
         ...formData,
@@ -172,17 +168,31 @@ const Login = ({login, isAuthenticated}) => {
 
                 {/*  Submit  */}
 
-                <div className="col-md-8 offset-1 col-10">
-                    <button className="btn btn-primary" type="submit">
-                        Sign In
-                    </button>
+                {/* If clicked btn then remove signin btn
+                 & show spinner */}
 
-                    <hr />
+                   {loading ? (
 
-                </div>
+                    <div className="text-center">
+                        <div className="spinner-border" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                ) : (
+                    <div className="col-md-8 offset-1 col-10">
+
+                        <button className="btn btn-primary" type="submit">
+                            Sign In
+                        </button>
+                    </div>
+                )
+                }
+
             </form>
 
             <div className={"col-md-8 offset-1 col-10"}>
+
+                <hr />
 
                 <button className="btn btn-danger btn-sm me-2" onClick={continueWithGoogle}>
                     Continue With Google
@@ -197,10 +207,10 @@ const Login = ({login, isAuthenticated}) => {
     );
 };
 
-const mapStateToProps = state => (
-    {
-        isAuthenticated: state.auth.isAuthenticated,
-    }
-);
+const mapStateToProps = state => ({
+
+    isAuthenticated: state.auth.isAuthenticated,
+    loading: state.auth.loading,
+});
 
 export default connect(mapStateToProps, {login})(Login);

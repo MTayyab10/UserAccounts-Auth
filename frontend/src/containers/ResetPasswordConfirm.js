@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
-import {Navigate, useMatch} from 'react-router-dom';
+import {Navigate, useMatch, useNavigate} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {reset_password_confirm} from '../actions/auth';
 import {setAlert} from "../actions/alert";
 import {toast, ToastContainer} from "react-toastify";
 
 
-const ResetPasswordConfirm = ({ reset_password_confirm}) => {
+const ResetPasswordConfirm = ({reset_password_confirm, loading}) => {
 
     const [requestSent, setRequestSent] = useState(false);
 
@@ -24,6 +24,8 @@ const ResetPasswordConfirm = ({ reset_password_confirm}) => {
 
     let match = useMatch('/password/reset/confirm/:uid/:token');
 
+    const navigate = useNavigate()
+
     const onSubmit = e => {
         e.preventDefault();
 
@@ -38,8 +40,7 @@ const ResetPasswordConfirm = ({ reset_password_confirm}) => {
         } else {
             setAlert("Successfully, your password has been reset.",
                 "success")
-            reset_password_confirm(uid, token, new_password, re_new_password);
-            setRequestSent(true);
+            reset_password_confirm(uid, token, new_password, re_new_password, navigate);
         }
 
     };
@@ -51,9 +52,9 @@ const ResetPasswordConfirm = ({ reset_password_confirm}) => {
 
 
     return (
-        <div className='container mt-3'>
+        <div className="container mt-3">
 
-            <ToastContainer />
+            <ToastContainer/>
 
             <h3 className={"text-center p-1"}>
                 Set New Password
@@ -61,7 +62,7 @@ const ResetPasswordConfirm = ({ reset_password_confirm}) => {
 
             <form onSubmit={e => onSubmit(e)}>
 
-                <div className="col-md-4 offset-1 col-10">
+                <div className="offset-md-4 col-md-4 offset-1 col-10">
 
                     <label htmlFor="validatePassword" className="form-label">
                         Password
@@ -75,7 +76,7 @@ const ResetPasswordConfirm = ({ reset_password_confirm}) => {
                            onChange={e => onChange(e)}
                            required
                            minLength='6'
-                           autoComplete={"true"} />
+                           autoComplete={"true"}/>
                     {/*<div className="valid-feedback">*/}
                     {/*    Looks good!*/}
                     {/*</div>*/}
@@ -84,9 +85,9 @@ const ResetPasswordConfirm = ({ reset_password_confirm}) => {
                     </div>
                 </div>
 
-                <br />
+                <br/>
 
-                <div className="col-md-4 offset-1 col-10">
+                <div className="offset-md-4 col-md-4 offset-1 col-10">
 
                     <label htmlFor="validateConfirmPassword" className="form-label">
                         Confirm Password
@@ -109,12 +110,28 @@ const ResetPasswordConfirm = ({ reset_password_confirm}) => {
                     </div>
                 </div>
 
-                <button className='offset-1 btn btn-primary mt-3' type='submit'>
-                    Reset Password
-                </button>
+                {loading ? (
+                    <div className="text-center mt-3">
+                        <div className="spinner-border" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                ) : (
+
+
+                    <button className="offset-md-4 offset-1 btn btn-primary mt-3"
+                            type='submit'>
+                        Reset Password
+                    </button>
+                )
+                }
             </form>
         </div>
     );
 };
 
-export default connect(null, {reset_password_confirm})(ResetPasswordConfirm);
+const mapStateToProps = state => ({
+    loading: state.auth.loading
+})
+
+export default connect(mapStateToProps, {reset_password_confirm})(ResetPasswordConfirm);
