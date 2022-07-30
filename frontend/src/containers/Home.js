@@ -4,7 +4,7 @@ import {logout, setAlert} from "../actions/auth";
 import {connect} from "react-redux";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import {Alert} from "./Alert";
+import {Alert} from "../components/Alert";
 
 const Home = ({logout, isAuthenticated}) => {
 

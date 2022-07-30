@@ -17,6 +17,9 @@ import Layout from './hocs/Layout';
 import ResetPasswordMsg from "./containers/ResetPasswordMsg";
 import ActivateMsg from "./containers/ActivateMsg";
 import ResendActivation from "./containers/ResendActivation";
+import UserInfo from "./containers/UserInfo";
+import NotFound from './containers/NotFound';
+
 
 const App = () => (
 
@@ -25,6 +28,8 @@ const App = () => (
             <Layout>
                 <Routes>
                     <Route exact path='/' element={<Home />} />
+
+                    <Route exact path='/user_info' element={<UserInfo />} />
 
                     <Route exact path='/login' element={<Login />} />
                     <Route exact path='/signup' element={<Signup />} />
@@ -39,6 +44,9 @@ const App = () => (
                     <Route exact path='/activate/:uid/:token' element={<Activate />} />
                     <Route exact path='/activate/sent' element={<ActivateMsg />} />
                     <Route exact path={'/resend/activation'} element={<ResendActivation /> } />
+
+                    <Route path="*" element={<NotFound />}/>
+
                 </Routes>
             </Layout>
         {/*</Router>*/}

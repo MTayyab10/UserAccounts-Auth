@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {Navigate, useMatch, useNavigate} from 'react-router-dom';
-import { connect } from 'react-redux';
-import { verify } from '../actions/auth';
+import {connect} from 'react-redux';
+import {verify} from '../actions/auth';
 
-const Activate = ({ verify }) => {
+const Activate = ({verify, loading}) => {
 
     const [verified, setVerified] = useState(false);
 
@@ -26,21 +26,35 @@ const Activate = ({ verify }) => {
 
     return (
         <div className='container'>
-            <div 
+            <div
                 className='text-center'>
 
-                <h2 className={"p-2"}>Verify your Account:</h2>
+                <h2 className={"p-2 m-4"}>Verify your Account:</h2>
 
-                <button
-                    onClick={verify_account}
-                    type='button'
-                    className='btn btn-primary'
-                >
-                    Verify
-                </button>
+                {loading ? (
+                    <div className="text-center">
+                        <div className="spinner-border" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                ) : (
+                    <button
+                        onClick={verify_account}
+                        type='button'
+                        className='btn btn-primary'
+                    >
+                        Verify
+                    </button>
+                )}
+
             </div>
         </div>
     );
 };
 
-export default connect(null, { verify })(Activate);
+const mapStateToProps = state => ({
+    loading: state.auth.loading
+})
+
+
+export default connect(mapStateToProps, {verify})(Activate);

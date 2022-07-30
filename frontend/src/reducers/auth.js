@@ -19,9 +19,13 @@ import {
     GOOGLE_AUTH_FAIL,
     FACEBOOK_AUTH_SUCCESS,
     FACEBOOK_AUTH_FAIL,
-    LOGOUT,
     RESEND_ACTIVATION_SUCCESS,
     RESEND_ACTIVATION_FAIL,
+
+    SET_AUTH_LOADING,
+    REMOVE_AUTH_LOADING,
+
+    LOGOUT,
 
 } from '../actions/types';
 
@@ -30,12 +34,26 @@ const initialState = {
     refresh: localStorage.getItem("refresh"),
     isAuthenticated: null,
     user: null,
+    loading: false
+
 };
 
 export default function(state = initialState, action) {
     const { type, payload } = action;
 
     switch(type) {
+
+        case SET_AUTH_LOADING:
+            return {
+                ...state,
+                loading: true
+            }
+        case REMOVE_AUTH_LOADING:
+            return {
+                ...state,
+                loading: false
+            }
+
         case AUTHENTICATED_SUCCESS:
             return {
                 ...state,

@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
-import { Link, Navigate } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import React, {useState} from 'react';
+import {Link, Navigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {connect, useDispatch, useSelector} from 'react-redux';
 import {signup} from '../actions/auth';
 import axios from 'axios';
 import {toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css'
 import {setAlert} from "../actions/alert";
+import {Rings} from 'react-loader-spinner';
 
 
-const Signup = ({ signup, isAuthenticated }) => {
+const Signup = ({signup, isAuthenticated, loading}) => {
 
     const [accountCreated, setAccountCreated] = useState(false);
 
@@ -22,9 +23,11 @@ const Signup = ({ signup, isAuthenticated }) => {
         re_password: '',
     });
 
-    const { name,
+    const {
+        name,
         // first_name, last_name,
-        email, password, re_password } = formData;
+        email, password, re_password
+    } = formData;
 
     const onChange = e => setFormData({
         ...formData,
@@ -70,7 +73,7 @@ const Signup = ({ signup, isAuthenticated }) => {
     };
 
     if (isAuthenticated) {
-        return <Navigate to='/' />
+        return <Navigate to='/'/>
     }
 
     // if (accountCreated) {
@@ -100,7 +103,6 @@ const Signup = ({ signup, isAuthenticated }) => {
             })
     })()
 
-
     return (
         <div className='container mt-2'>
 
@@ -110,7 +112,7 @@ const Signup = ({ signup, isAuthenticated }) => {
 
             {/*This is just to display password didn't match error.*/}
 
-            <ToastContainer />
+            <ToastContainer/>
 
             <form onSubmit={e => onSubmit(e)}
                   className="row g-3 needs-validation" noValidate>
@@ -125,7 +127,7 @@ const Signup = ({ signup, isAuthenticated }) => {
                     <input type="text"
                            className="form-control"
                            id="validateFirstName"
-                           // placeholder='Email'
+                        // placeholder='Email'
                            name="name"
                            value={name}
                            onChange={e => onChange(e)}
@@ -138,7 +140,7 @@ const Signup = ({ signup, isAuthenticated }) => {
                     </div>
                 </div>
 
-                 <div className="col-md-4 offset-1 col-10">
+                <div className="col-md-4 offset-1 col-10">
 
                     <label htmlFor="validateEmail"
                            className="form-label">
@@ -148,7 +150,7 @@ const Signup = ({ signup, isAuthenticated }) => {
                     <input type="email"
                            className="form-control"
                            id="validateEmail"
-                           // placeholder='Email'
+                        // placeholder='Email'
                            name='email'
                            value={email}
                            onChange={e => onChange(e)}
@@ -175,7 +177,7 @@ const Signup = ({ signup, isAuthenticated }) => {
                            onChange={e => onChange(e)}
                            required
                            minLength='6'
-                           autoComplete={"true"} />
+                           autoComplete={"true"}/>
                     {/*<div className="valid-feedback">*/}
                     {/*    Looks good!*/}
                     {/*</div>*/}
@@ -222,19 +224,33 @@ const Signup = ({ signup, isAuthenticated }) => {
 
                 {/*  Submit  */}
 
-                <div className="col-md-8 offset-1 col-10">
-                    <button className="btn btn-primary" type="submit">
-                        Sign Up
-                    </button>
+                {/* If clicked btn then remove register btn
+                 and show spinner */}
 
-                    <hr />
+                {loading ? (
 
-                </div>
+                    <div className="text-center">
+                        <div className="spinner-border" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                ) : (
+                    <div className="col-md-8 offset-1 col-10">
+
+                        <button className="btn btn-primary" type="submit">
+                            Sign Up
+                        </button>
+                    </div>
+                )
+                }
+
             </form>
 
             {/* Login with Google & Fb, Socials */}
 
-             <div className={"col-md-8 offset-1 col-10"}>
+            <div className={"col-md-8 offset-1 col-10"}>
+
+                <hr/>
 
                 <button className="btn btn-danger btn-sm me-2" onClick={continueWithGoogle}>
                     Continue With Google
@@ -250,8 +266,8 @@ const Signup = ({ signup, isAuthenticated }) => {
 
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
-    errors: state.auth.errors,
+    loading: state.auth.loading
 });
 
 
-export default connect(mapStateToProps, { signup })(Signup);
+export default connect(mapStateToProps, {signup})(Signup);

@@ -3,21 +3,36 @@ import {Link} from "react-router-dom";
 import {connect, useSelector} from "react-redux";
 import {logout} from "../actions/auth";
 import {NavLink} from "react-router-dom";
-import Alert from "../containers/Alert";
+import {Navigate} from "react-router-dom";
+
+import Alert from "./Alert";
 import {ToastContainer} from "react-toastify";
 
 
-const Navbar = ({logout, isAuthenticated}) => {
+const Navbar = ({logout, isAuthenticated, user}) => {
 
     const [redirect, setRedirect] = useState(false);
-
-    // User Name
 
     const logout_user = () => {
         logout();
         setRedirect(true);
     };
 
+    // username
+    const userName = () => {
+        return (
+            <>
+                Hi, <strong>
+                 {
+                    user && true && true ?
+                        user.name : ' Guest'
+                }
+            </strong>
+
+
+            </>
+        )
+    };
 
     // If user is not login/authenticated
 
@@ -25,13 +40,13 @@ const Navbar = ({logout, isAuthenticated}) => {
         <Fragment>
 
             <li className="nav-item">
-                <NavLink to="/login" className="nav-link" >
+                <NavLink to="/login" className="nav-link">
                     Login
                 </NavLink>
             </li>
 
             <li className="nav-item">
-                <NavLink to="/signup" className="nav-link" >
+                <NavLink to="/signup" className="nav-link">
                     Sign Up
                 </NavLink>
             </li>
@@ -42,14 +57,6 @@ const Navbar = ({logout, isAuthenticated}) => {
 
     const authLinks = () => (
         <>
-            {/*Hello to Authenticated User*/}
-
-            <li className='nav-item'>
-                <a className='nav-link'
-                   href='#'>
-                    Hello, {isAuthenticated ? "True" : "False"}
-                </a>
-            </li>
 
             {/*Logout*/}
 
@@ -79,6 +86,7 @@ const Navbar = ({logout, isAuthenticated}) => {
                     <div className="collapse navbar-collapse"
                          id="navbarSupportedContent">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+
                             <li className="nav-item">
 
                                 {/*<Link className={}*/}
@@ -89,7 +97,15 @@ const Navbar = ({logout, isAuthenticated}) => {
                                 </NavLink>
                             </li>
 
-                             {isAuthenticated ? authLinks() : guestLinks()}
+                            {/*If user is login then Hi, username otherwise hi guest*/}
+
+                            <li className='nav-item'>
+                                <NavLink to={'/user_info'} className='nav-link' href='#'>
+                                    {userName()}
+                                </NavLink>
+                            </li>
+
+                            {isAuthenticated ? authLinks() : guestLinks()}
 
                         </ul>
 
@@ -97,7 +113,7 @@ const Navbar = ({logout, isAuthenticated}) => {
                 </div>
             </nav>
 
-            <Alert />
+            <Alert/>
             {/*<nav className='navbar navbar-light bg-light'>*/}
 
             {/* <Link className='navbar-brand' to='/'>Auth System</Link>*/}
@@ -107,7 +123,8 @@ const Navbar = ({logout, isAuthenticated}) => {
 };
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated
+    isAuthenticated: state.auth.isAuthenticated,
+    user: state.auth.user
 });
 
 export default connect(mapStateToProps, {logout})(Navbar);

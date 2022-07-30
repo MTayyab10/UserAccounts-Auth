@@ -3,7 +3,7 @@ import {Navigate, useNavigate} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {reset_password} from '../actions/auth';
 
-const ResetPassword = ({reset_password}) => {
+const ResetPassword = ({reset_password, loading}) => {
 
     const [requestSent, setRequestSent] = useState(false);
 
@@ -30,7 +30,6 @@ const ResetPassword = ({reset_password}) => {
     //     return <Navigate to='/reset-password/sent'/>
     // }
 
-    const animation = () =>  "This is some animation";
 
     return (
         <div className="container">
@@ -62,9 +61,19 @@ const ResetPassword = ({reset_password}) => {
                             />
                         </div>
 
-                        <input type="submit" value="Rest Password" onClick={animation}
+                        {loading ? (
+                            <div className="text-center mt-3">
+                                <div className="spinner-border" role="status">
+                                    <span className="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                        ) : (
+
+                        <input type="submit" value="Rest Password"
                                className="btn btn-pill text-white btn-primary mt-3" />
-                        {/*<button className='btn btn-primary' type='submit'>Reset Password</button>*/}
+                        )
+                        }
+
                     </form>
                 </div>
             </div>
@@ -72,4 +81,8 @@ const ResetPassword = ({reset_password}) => {
     );
 };
 
-export default connect(null, {reset_password})(ResetPassword);
+const mapStateToProps = state => ({
+    loading: state.auth.loading
+})
+
+export default connect(mapStateToProps, {reset_password})(ResetPassword);
